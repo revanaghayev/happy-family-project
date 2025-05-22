@@ -1,8 +1,6 @@
 package console;
 
-import entities.Family;
-import entities.Human;
-import entities.Pet;
+import entities.*;
 import enums.DayOfWeek;
 import enums.Species;
 
@@ -13,9 +11,9 @@ public class FamilyApp {
     public static void main(String[] args) {
 
         Pet pet1 = new Pet(Species.DOG, "Rex");
-        Pet pet2 = new Pet(Species.CAT, 6, "Kisa",
+        Pet pet2 = new DomesticCat(6, "Kisa",
                 new String[]{"Scratching", "Eating", "Smiling"}, (byte) 20);
-        Pet pet3 = new Pet();
+        Pet pet3 = new Dog();
         Human mother = new Human("Sveta", "Mamedova", 1970);
         Human father = new Human();
         Family ourFamily = new Family(mother, father);

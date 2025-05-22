@@ -1,11 +1,13 @@
 package enums;
 
 public enum Species {
-    CAT(false, 4, true),
-    DOG(false, 4, true),
+    DOMESTIC_CAT(false, 4, true),
     ROBOT_CAT(false, 4, false),
-    RABBIT(false, 4, true),
-    PARROT(true, 2, false);
+    DOG(false, 4, true),
+    FISH(false,0,false),
+//    RABBIT(false, 4, true),
+//    PARROT(true, 2, false),
+    UNKNOWN(false, -1, false);
 
     public final boolean canFly;
     public final int numberOfLegs;

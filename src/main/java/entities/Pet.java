@@ -5,7 +5,7 @@ import enums.Species;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Pet {
+public abstract class Pet {
 
     private Species species;
     private String nickname;
@@ -21,8 +21,7 @@ public class Pet {
         System.out.println("Pet object created!");
     }
 
-    public Pet(Species species, Integer age, String nickname, String[] habits, Byte trickLevel) {
-        this.species = species;
+    public Pet(Integer age, String nickname, String[] habits, Byte trickLevel) {
         this.age = age;
         this.nickname = nickname;
         this.habits = habits;
@@ -33,8 +32,7 @@ public class Pet {
         }
     }
 
-    public Pet(Species species, String nickname) {
-        this.species = species;
+    public Pet(String nickname) {
         this.nickname = nickname;
     }
 
@@ -45,17 +43,7 @@ public class Pet {
         System.out.println("Im eating!");
     }
 
-    public void respond(Pet pet) {
-        if (pet.nickname != null) {
-            System.out.println("Hello owner. Im - " + pet.nickname + ". I miss you!");
-        } else {
-            System.out.println("Pet you want to describe is missing this fields: Nickname");
-        }
-    }
-
-    public void foul() {
-        System.out.println("I need to cover it up!");
-    }
+    public abstract void respond(Pet pet);
 
     public Species getSpecies() {
         return species;
