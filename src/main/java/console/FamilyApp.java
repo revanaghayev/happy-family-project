@@ -10,10 +10,10 @@ public class FamilyApp {
 
     public static void main(String[] args) {
 
-        Pet pet1 = new Pet(Species.DOG, "Rex");
+        Pet pet1 = new Dog(Species.DOG, "Rex");
         Pet pet2 = new DomesticCat(6, "Kisa",
                 new String[]{"Scratching", "Eating", "Smiling"}, (byte) 20);
-        Pet pet3 = new Dog();
+        Pet pet3 = new Dog(Species.DOG, "Pitty");
         Human mother = new Human("Sveta", "Mamedova", 1970);
         Human father = new Human();
         Family ourFamily = new Family(mother, father);

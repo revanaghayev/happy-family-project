@@ -2,8 +2,6 @@ package entities;
 
 import enums.Species;
 
-import java.awt.*;
-
 public class Dog extends Pet implements Foulable {
 
     private final Species species;
@@ -13,7 +11,7 @@ public class Dog extends Pet implements Foulable {
         this.species = Species.DOG;
     }
 
-    public Dog(String nickname) {
+    public Dog(Species dog, String nickname) {
         super(nickname);
         this.species = Species.DOG;
     }

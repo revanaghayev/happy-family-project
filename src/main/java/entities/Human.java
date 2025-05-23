@@ -1,15 +1,18 @@
 package entities;
 
+import enums.DayOfWeek;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class Human {
+public class Human implements HumanCreator{
 
     private String name;
     private String surname;
     private Integer year;
-    private Byte iq;
+    private int iq;
     private String[][] schedule;
     private Family family;
 
@@ -21,7 +24,7 @@ public class Human {
         System.out.println("Human object created!");
     }
 
-    public Human(String name, String surname, Integer year, Byte iq, String[][] schedule, Family family) {
+    public Human(String name, String surname, Integer year, int iq, String[][] schedule, Family family) {
         this.name = name;
         this.surname = surname;
         this.year = year;
@@ -87,6 +90,26 @@ public class Human {
         }
     }
 
+    @Override
+    public void bornChild(Family family) {
+
+        String[] boyNames = new String[] {"Alexei", "Ivan", "Sergey", "Nikolai", "Dmitriy",
+                "Andrei", "Vladimir", "Yuri", "Pavel", "Mikhail"};
+        String[] girlNames = new String[] {"Anastasia", "Svetlana", "Ekaterina", "Irina", "Olga",
+                "Tatiana", "Natalia", "Maria", "Alina", "Elena"};
+        Random randomGenerator = new Random();
+        int randomNameIndex = randomGenerator.nextInt();
+
+        Human boy = new Man(boyNames[randomNameIndex], family.getFather().getSurname(), 2010,
+                ((family.getFather().getIq()+family.getMother().getIq()) / 2),
+                new String[][]{{DayOfWeek.MONDAY.name(), "I just born, lol"}}, family);
+        Human girl = new Woman(girlNames[randomNameIndex], family.getFather().getSurname(), 2010,
+                ((family.getFather().getIq()+family.getMother().getIq()) / 2),
+                new String[][]{{DayOfWeek.MONDAY.name(), "I just born, lol"}}, family);
+        Human newBorn = randomGenerator.nextBoolean() ? boy : girl;
+        family.addChild(newBorn);
+    }
+
     public String getName() {
         return name;
     }
@@ -103,11 +126,11 @@ public class Human {
         this.surname = surname;
     }
 
-    public Byte getIq() {
+    public int getIq() {
         return iq;
     }
 
-    public void setIq(Byte iq) {
+    public void setIq(int iq) {
         if (iq < 100 && iq > 1) {
             this.iq = iq;
         } else {
@@ -165,7 +188,7 @@ public class Human {
     public String toString() {
         if (name == null) {
             return "Empty Human";
-        } else if (iq == null) {
+        } else if (iq == 0) {
             return "Human:" +
                     " Name = " + name +
                     ", Surname = " + surname +
