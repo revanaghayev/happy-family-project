@@ -2,11 +2,13 @@ package entities;
 
 import enums.Species;
 
+import java.util.Set;
+
 public class Fish extends Pet{
 
     private final Species species;
 
-    public Fish(Integer age, String nickname, String[] habits, Byte trickLevel) {
+    public Fish(Integer age, String nickname, Set<String> habits, Integer trickLevel) {
         super(age, nickname, habits, trickLevel);
         this.species = Species.FISH;
     }

@@ -4,14 +4,15 @@ import enums.Species;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class Pet {
 
     private Species species;
     private String nickname;
     private Integer age;
-    private Byte trickLevel;
-    private String[] habits;
+    private Integer trickLevel;
+    private Set<String> habits;
 
     static {
         System.out.println("Pet object loaded!");
@@ -21,7 +22,8 @@ public abstract class Pet {
         System.out.println("Pet object created!");
     }
 
-    public Pet(Integer age, String nickname, String[] habits, Byte trickLevel) {
+    public Pet(Integer age, String nickname, Set<String > habits, Integer trickLevel) {
+        this.species = Species.UNKNOWN;
         this.age = age;
         this.nickname = nickname;
         this.habits = habits;
@@ -33,6 +35,7 @@ public abstract class Pet {
     }
 
     public Pet(String nickname) {
+        this.species = Species.UNKNOWN;
         this.nickname = nickname;
     }
 
@@ -45,6 +48,9 @@ public abstract class Pet {
 
     public abstract void respond(Pet pet);
 
+    public void foul() {
+
+    }
     public Species getSpecies() {
         return species;
     }
@@ -53,11 +59,11 @@ public abstract class Pet {
         this.species = species;
     }
 
-    public Byte getTrickLevel() {
+    public Integer getTrickLevel() {
         return trickLevel;
     }
 
-    public void setTrickLevel(Byte trickLevel) {
+    public void setTrickLevel(Integer trickLevel) {
         if (trickLevel < 100 && trickLevel > 1) {
             this.trickLevel = trickLevel;
         } else {
@@ -78,14 +84,15 @@ public abstract class Pet {
     }
 
     public void setAge(Integer age) {
+        if (age < 0) throw new IllegalArgumentException("Age can't be lower than 0!");
         this.age = age;
     }
 
-    public String getHabits() {
-        return Arrays.toString(habits);
+    public Set<String> getHabits() {
+        return habits;
     }
 
-    public void setHabits(String[] habits) {
+    public void setHabits(Set<String> habits) {
         this.habits = habits;
     }
 
@@ -102,7 +109,7 @@ public abstract class Pet {
 
     @Override
     public int hashCode() {
-        return Objects.hash(species, nickname, age, trickLevel, Arrays.hashCode(habits));
+        return Objects.hash(species, nickname, age, trickLevel, habits);
     }
 
     @Override
@@ -127,7 +134,7 @@ public abstract class Pet {
                     " Nickname = " + nickname +
                     ", Age = " + age +
                     ", TrickLevel = " + trickLevel +
-                    ", Habits = " + Arrays.toString(habits) +
+                    ", Habits = " + habits +
                     " Characteristics = {" + (species.canFly ? "Can fly," : "Can't fly,") +
                     " Number of legs: " + species.numberOfLegs +
                     (species.hasFur ? "Has fur}" : "Has not any fur}") +

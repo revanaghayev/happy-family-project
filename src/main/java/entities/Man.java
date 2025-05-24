@@ -1,9 +1,21 @@
 package entities;
 
+import enums.DayOfWeek;
+
+import java.util.Map;
+
 public final class Man extends Human{
 
-    public Man(String name, String surname, Integer year, int iq, String[][] schedule, Family family) {
-        super(name, surname, year, iq, schedule, family);
+    public Man() {
+
+    }
+
+    public Man(String name, String surname, Integer dateOfBirth, int iq, Map<String, String> schedule, Family family) {
+        super(name, surname, dateOfBirth, iq, schedule, family);
+    }
+
+    public Man(String name, String surname, Integer dateOfBirth) {
+        super(name, surname, dateOfBirth);
     }
 
     public void repairCar() {

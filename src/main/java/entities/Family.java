@@ -1,68 +1,56 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Family {
 
     private final Human mother;
     private final Human father;
-    private Human[] children;
+    private List<Human> children;
     private Pet pet;
 
     static {
-        System.out.println("Family object loaded!");
+        System.out.println(Family.class.getName() + " object loaded successfully!");
     }
 
     {
-        System.out.println("Family object created!");
+        System.out.println(this.getClass().getTypeName() + " object created successfully!");
     }
 
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
-        this.children = new Human[0];
+        this.children = new ArrayList<>();
     }
 
     public boolean addChild(Human human) {
-        if (human == null || human.contains(human, children)){
+        if (human == null || children.contains(human)){
             System.out.println("Invalid input!");
             return false;
         }
 
-        Human[] newChildren = Arrays.copyOf(children, children.length+1);
-        newChildren[children.length] = human;
-        this.children = newChildren;
-        System.out.println("Added successfully!");
+        this.children.add(human);
+        System.out.println("Child added successfully!");
         return true;
     }
 
     public boolean deleteChild(int deleteIndex) {
-        if (children == null || deleteIndex < 0 || deleteIndex >= children.length || children[deleteIndex] == null ) {
-            System.out.println("Not deleted any child object!");
+        if (children == null || deleteIndex < 0 || deleteIndex >= children.size() || children.get(deleteIndex) == null ) {
+            System.out.println("Can't delete any child object!");
             return false;
         }
 
-        Human[] newChildren = new Human[children.length - 1];
-        System.arraycopy(children, 0, newChildren, 0, deleteIndex);
-        System.arraycopy(children, deleteIndex + 1, newChildren, deleteIndex, children.length - deleteIndex - 1);
-        this.children = newChildren;
-        System.out.println("Deleted successfully!");
+        this.children.remove(deleteIndex);
+        System.out.println("Child deleted successfully!");
         return true;
     }
 
     public boolean deleteChild(Human child) {
         if (children == null || child == null) return false;
-        Human[] newChildren = new Human[children.length - 1];
-        int j = 0;
-        for (int i = 0; i < children.length; i++) {
-            if (children[i].equals(child)) {
-                return deleteChild(i);
-            } else {
-                System.out.println("Not deleted any child object!");
-                return false;
-            }
-        }
+        this.children.remove(child);
         return true;
     }
 
@@ -70,7 +58,7 @@ public class Family {
         int count = 0;
         if (mother != null) count++;
         if (father != null) count++;
-        if (children != null) count += children.length;
+        if (children != null) count += children.size();
         if (pet != null) count++;
         return count;
     }
@@ -83,11 +71,11 @@ public class Family {
         return father;
     }
 
-    public Human[] getChildren() {
+    public List<Human> getChildren() {
         return children;
     }
 
-    public void setChildren(Human[] children) {
+    public void setChildren(List<Human> children) {
         this.children = children;
     }
 
@@ -111,7 +99,7 @@ public class Family {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mother, father, Arrays.hashCode(children), pet);
+        return Objects.hash(mother, father, children, pet);
     }
 
     @Override
@@ -125,7 +113,7 @@ public class Family {
         return "Family:" +
                 " Mother = " + mother +
                 ", Father = " + father +
-                ", Children = " + Arrays.toString(children) +
+                ", Children = " + children +
                 ", Pet = " + pet +
                 ';';
     }

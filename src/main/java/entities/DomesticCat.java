@@ -2,11 +2,13 @@ package entities;
 
 import enums.Species;
 
+import java.util.Set;
+
 public class DomesticCat extends Pet implements Foulable{
 
     private final Species species;
 
-    public DomesticCat(Integer age, String nickname, String[] habits, Byte trickLevel) {
+    public DomesticCat(Integer age, String nickname, Set<String> habits, Integer trickLevel) {
         super(age, nickname, habits, trickLevel);
         this.species = Species.DOMESTIC_CAT;
     }

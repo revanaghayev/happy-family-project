@@ -2,45 +2,50 @@ package entities;
 
 import enums.DayOfWeek;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Human implements HumanCreator{
 
     private String name;
     private String surname;
-    private Integer year;
+    private Integer dateOfBirth;
     private int iq;
-    private String[][] schedule;
+    private Map<String, String> schedule;
     private Family family;
 
     static {
-        System.out.println("Human object loaded!");
+        System.out.println(Human.class.getName() + " class loaded successfully!");
     }
 
     {
-        System.out.println("Human object created!");
+        System.out.println(this.getClass().getTypeName() + " object created successfully!");
     }
 
-    public Human(String name, String surname, Integer year, int iq, String[][] schedule, Family family) {
+    public Human(String name, String surname, Integer dateOfBirth, int iq, Map<String, String> schedule, Family family) {
+        if (dateOfBirth < 1900 || dateOfBirth > LocalDate.now().getYear()) {
+            throw new IllegalArgumentException("Year cannot be lower than 1900 or bigger than current year!");
+        }
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.dateOfBirth = dateOfBirth;
         if (iq < 100 && iq > 1) {
             this.iq = iq;
         } else {
-            throw new IllegalArgumentException("Invalid input!");
+            throw new IllegalArgumentException("IQ must be between 1 and 100!");
         }
         this.schedule = schedule;
         this.family = family;
     }
 
-    public Human(String name, String surname, Integer year) {
+    public Human(String name, String surname, Integer dateOfBirth) {
+        if (dateOfBirth < 1900 || dateOfBirth > LocalDate.now().getYear()) {
+            throw new IllegalArgumentException("Year cannot be lower than 1900 or bigger than current year!");
+        }
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Human() {
@@ -64,7 +69,7 @@ public class Human implements HumanCreator{
             System.out.println("I have a " + pet.getSpecies() + " is " + pet.getAge() +
                     " years old, he is " + (pet.getTrickLevel() > 50 ? "very sly." : "almost not sly."));
         } catch (NullPointerException IllegalArgumentException){
-            System.out.println("Pet you want to describe is missing this fields: Species, Age, Trick Level");
+            System.out.println("Pet you want to describe is missing this fields: Species, Age, Trick Level.");
         }
     }
 
@@ -77,7 +82,7 @@ public class Human implements HumanCreator{
                 return true;
             } else {
                 if (pet.getTrickLevel() > randomNumber) {
-                    System.out.println("Hmm...I will feed " + name + "'s " + pet.getSpecies());
+                    System.out.println("Hmm...I will feed " + name + "'s " + pet.getSpecies() + ".");
                     return true;
                 } else {
                     System.out.println("I think Jack is not hungry.");
@@ -85,29 +90,43 @@ public class Human implements HumanCreator{
                 }
             }
         } catch (NullPointerException IllegalArgumentException) {
-            System.out.println("Pet you want to describe is missing this fields: Species");
+            System.out.println("Pet you want to describe is missing this fields: Species.");
             return false;
         }
     }
 
-    @Override
+    public String ifExists(List<String> namesList, int nameIndex) {
+        List<Human> children = this.getFamily().getChildren();
+        String unUsedName = null;
+        for (int i = 0; i < children.size(); i++) {
+            if (!namesList.get(nameIndex).equalsIgnoreCase(children.get(i).getName())){
+                unUsedName = namesList.get(nameIndex);
+            }
+        }
+
+        return null;
+    }
+
     public void bornChild(Family family) {
-
-        String[] boyNames = new String[] {"Alexei", "Ivan", "Sergey", "Nikolai", "Dmitriy",
-                "Andrei", "Vladimir", "Yuri", "Pavel", "Mikhail"};
-        String[] girlNames = new String[] {"Anastasia", "Svetlana", "Ekaterina", "Irina", "Olga",
-                "Tatiana", "Natalia", "Maria", "Alina", "Elena"};
         Random randomGenerator = new Random();
-        int randomNameIndex = randomGenerator.nextInt();
+        if (family.getFather() != null && family.getMother() != null && !(this instanceof Man) && this.getFamily() != null) {
+            List<String > boyNames = List.of("Alexei", "Ivan", "Sergey", "Nikolai", "Dmitriy",
+                    "Andrei", "Vladimir", "Yuri", "Pavel", "Mikhail");
+            List<String> girlNames = List.of("Anastasia", "Svetlana", "Ekaterina", "Irina", "Olga",
+                    "Tatiana", "Natalia", "Maria", "Alina", "Elena");
+            int randomNameIndex = randomGenerator.nextInt(10);
 
-        Human boy = new Man(boyNames[randomNameIndex], family.getFather().getSurname(), 2010,
-                ((family.getFather().getIq()+family.getMother().getIq()) / 2),
-                new String[][]{{DayOfWeek.MONDAY.name(), "I just born, lol"}}, family);
-        Human girl = new Woman(girlNames[randomNameIndex], family.getFather().getSurname(), 2010,
-                ((family.getFather().getIq()+family.getMother().getIq()) / 2),
-                new String[][]{{DayOfWeek.MONDAY.name(), "I just born, lol"}}, family);
-        Human newBorn = randomGenerator.nextBoolean() ? boy : girl;
-        family.addChild(newBorn);
+            Human boy = new Man(ifExists(boyNames, randomNameIndex) != null ? ifExists(boyNames, randomNameIndex) : "Undefined name!", family.getFather().getSurname(), LocalDateTime.now().getYear(),
+                    ((family.getFather().getIq() + family.getMother().getIq()) / 2),
+                    Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family);
+            Human girl = new Woman(ifExists(girlNames, randomNameIndex) != null ? ifExists(girlNames, randomNameIndex) : "Undefined name!", family.getFather().getSurname(), LocalDateTime.now().getYear(),
+                    ((family.getFather().getIq() + family.getMother().getIq()) / 2),
+                    Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family);
+            Human newBorn = randomGenerator.nextBoolean() ? boy : girl;
+            family.addChild(newBorn);
+        } else {
+            System.out.println("Can't born child, because there's no father or mother!");
+        }
     }
 
     public String getName() {
@@ -134,24 +153,27 @@ public class Human implements HumanCreator{
         if (iq < 100 && iq > 1) {
             this.iq = iq;
         } else {
-            System.out.println("Invalid input!");
+            System.out.println("IQ must be between 1 and 100!");
         }
     }
 
-    public String[][] getSchedule() {
+    public Map<String, String> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(String[][] schedule) {
+    public void setSchedule(Map<String, String> schedule) {
         this.schedule = schedule;
     }
 
-    public Integer getYear() {
-        return year;
+    public Integer getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setDateOfBirth(Integer dateOfBirth) {
+        if (dateOfBirth < 1900 || dateOfBirth > LocalDate.now().getYear()) {
+            throw new IllegalArgumentException("Year cannot be lower than 1900 or bigger than current year!");
+        }
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Family getFamily() {
@@ -168,14 +190,14 @@ public class Human implements HumanCreator{
         if (!(o instanceof Human human)) return false;
         return Objects.equals(name, human.name)
                 && Objects.equals(surname, human.surname)
-                && Objects.equals(year, human.year)
+                && Objects.equals(dateOfBirth, human.dateOfBirth)
                 && Objects.equals(iq, human.iq)
                 && Objects.deepEquals(schedule, human.schedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, year, iq, Arrays.deepHashCode(schedule));
+        return Objects.hash(name, surname, dateOfBirth, iq, schedule);
     }
 
     @Override
@@ -192,15 +214,15 @@ public class Human implements HumanCreator{
             return "Human:" +
                     " Name = " + name +
                     ", Surname = " + surname +
-                    ", Birth year = " + year +
+                    ", Birth date = " + dateOfBirth +
                     ';';
         } else {
             return "Human:" +
                     " Name = " + name +
                     ", Surname= " + surname +
-                    ", Birth year = " + year +
+                    ", Birth date = " + dateOfBirth +
                     ", IQ level = " + iq +
-                    ", Schedule = " + Arrays.deepToString(schedule) +
+                    ", Schedule = " + schedule +
                     ';';
         }
     }
