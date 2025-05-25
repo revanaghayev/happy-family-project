@@ -1,6 +1,4 @@
-package entities;
-
-import enums.DayOfWeek;
+package com.example.happyfamily.entities;
 
 import java.util.Map;
 

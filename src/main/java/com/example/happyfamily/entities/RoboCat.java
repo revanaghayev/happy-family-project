@@ -1,21 +1,19 @@
-package entities;
+package com.example.happyfamily.entities;
 
-import enums.Species;
+import com.example.happyfamily.enums.Species;
 
 import java.util.Set;
 
 public class RoboCat extends Pet implements Foulable{
 
-    private final Species species;
-
     public RoboCat(Integer age, String nickname, Set<String> habits, Integer trickLevel) {
         super(age, nickname, habits, trickLevel);
-        this.species = Species.ROBOT_CAT;
+        setSpecies(Species.ROBOT_CAT);
     }
 
     public RoboCat(String nickname) {
         super(nickname);
-        this.species = Species.ROBOT_CAT;
+        setSpecies(Species.ROBOT_CAT);
     }
 
     @Override
@@ -23,7 +21,7 @@ public class RoboCat extends Pet implements Foulable{
         if (pet.getNickname() != null) {
             System.out.println("Blitz, blitz. Hello owner. Im - " + pet.getNickname() + ". I miss you!");
         } else {
-            System.out.println("Pet you want to describe is missing this fields: Nickname");
+            System.out.println("Pet you want to describe is missing this fields: Nickname.");
         }
     }
 

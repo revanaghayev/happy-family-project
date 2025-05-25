@@ -1,19 +1,16 @@
-package entities;
+package com.example.happyfamily.entities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Family {
 
     private final Human mother;
     private final Human father;
     private List<Human> children;
-    private Pet pet;
+    private Set<Pet> pets;
 
     static {
-        System.out.println(Family.class.getName() + " object loaded successfully!");
+        System.out.println(Family.class.getName() + " class loaded successfully!");
     }
 
     {
@@ -59,7 +56,7 @@ public class Family {
         if (mother != null) count++;
         if (father != null) count++;
         if (children != null) count += children.size();
-        if (pet != null) count++;
+        if (pets != null) count++;
         return count;
     }
 
@@ -79,12 +76,12 @@ public class Family {
         this.children = children;
     }
 
-    public Pet getPet() {
-        return pet;
+    public Set<Pet> getPet() {
+        return this.pets;
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void setPet(Set<Pet> pets) {
+        this.pets = pets;
     }
 
     @Override
@@ -94,12 +91,12 @@ public class Family {
         return Objects.equals(mother, family.mother)
                 && Objects.equals(father, family.father)
                 && Objects.deepEquals(children, family.children)
-                && Objects.equals(pet, family.pet);
+                && Objects.equals(pets, family.pets);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mother, father, children, pet);
+        return Objects.hash(mother, father, children, pets);
     }
 
     @Override
@@ -114,7 +111,7 @@ public class Family {
                 " Mother = " + mother +
                 ", Father = " + father +
                 ", Children = " + children +
-                ", Pet = " + pet +
+                ", Pet = " + pets +
                 ';';
     }
 }

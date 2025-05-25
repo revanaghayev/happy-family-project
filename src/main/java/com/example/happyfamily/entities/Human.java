@@ -1,6 +1,6 @@
-package entities;
+package com.example.happyfamily.entities;
 
-import enums.DayOfWeek;
+import com.example.happyfamily.enums.DayOfWeek;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,15 +51,6 @@ public class Human implements HumanCreator{
     public Human() {
     }
 
-    public Boolean contains(Human human, Human[] children) {
-        for (int i = 0; i < children.length; i++) {
-            if (children[i].equals(human)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void toWelcomeTheFavourite(Pet pet) {
         System.out.println("Hello, " + pet.getNickname());
     }
@@ -96,15 +87,12 @@ public class Human implements HumanCreator{
     }
 
     public String ifExists(List<String> namesList, int nameIndex) {
-        List<Human> children = this.getFamily().getChildren();
-        String unUsedName = null;
-        for (int i = 0; i < children.size(); i++) {
-            if (!namesList.get(nameIndex).equalsIgnoreCase(children.get(i).getName())){
-                unUsedName = namesList.get(nameIndex);
+        for (Human child: this.getFamily().getChildren()) {
+            if (namesList.get(nameIndex).equalsIgnoreCase(child.getName())){
+                return "Undefined name!";
             }
         }
-
-        return null;
+        return namesList.get(nameIndex);
     }
 
     public void bornChild(Family family) {
@@ -116,10 +104,10 @@ public class Human implements HumanCreator{
                     "Tatiana", "Natalia", "Maria", "Alina", "Elena");
             int randomNameIndex = randomGenerator.nextInt(10);
 
-            Human boy = new Man(ifExists(boyNames, randomNameIndex) != null ? ifExists(boyNames, randomNameIndex) : "Undefined name!", family.getFather().getSurname(), LocalDateTime.now().getYear(),
+            Human boy = new Man(ifExists(boyNames, randomNameIndex), family.getFather().getSurname(), LocalDateTime.now().getYear(),
                     ((family.getFather().getIq() + family.getMother().getIq()) / 2),
                     Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family);
-            Human girl = new Woman(ifExists(girlNames, randomNameIndex) != null ? ifExists(girlNames, randomNameIndex) : "Undefined name!", family.getFather().getSurname(), LocalDateTime.now().getYear(),
+            Human girl = new Woman(ifExists(girlNames, randomNameIndex), family.getFather().getSurname(), LocalDateTime.now().getYear(),
                     ((family.getFather().getIq() + family.getMother().getIq()) / 2),
                     Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family);
             Human newBorn = randomGenerator.nextBoolean() ? boy : girl;

@@ -1,4 +1,4 @@
-package entities;
+package com.example.happyfamily.entities;
 
 public interface Foulable {
 

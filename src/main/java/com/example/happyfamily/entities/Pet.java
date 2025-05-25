@@ -1,8 +1,7 @@
-package entities;
+package com.example.happyfamily.entities;
 
-import enums.Species;
+import com.example.happyfamily.enums.Species;
 
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 

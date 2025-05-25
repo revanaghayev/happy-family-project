@@ -1,12 +1,11 @@
-package enums;
+package com.example.happyfamily.enums;
 
 public enum Species {
     DOMESTIC_CAT(false, 4, true),
     ROBOT_CAT(false, 4, false),
     DOG(false, 4, true),
     FISH(false,0,false),
-//    RABBIT(false, 4, true),
-//    PARROT(true, 2, false),
+    PARROT(true, 2, false),
     UNKNOWN(false, -1, false);
 
     public final boolean canFly;

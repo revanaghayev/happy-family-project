@@ -1,21 +1,19 @@
-package entities;
+package com.example.happyfamily.entities;
 
-import enums.Species;
+import com.example.happyfamily.enums.Species;
 
 import java.util.Set;
 
 public class Fish extends Pet{
 
-    private final Species species;
-
     public Fish(Integer age, String nickname, Set<String> habits, Integer trickLevel) {
         super(age, nickname, habits, trickLevel);
-        this.species = Species.FISH;
+        setSpecies(Species.FISH);
     }
 
     public Fish(String nickname) {
         super(nickname);
-        this.species = Species.FISH;
+        setSpecies(Species.FISH);
     }
 
     @Override
@@ -23,7 +21,7 @@ public class Fish extends Pet{
         if (pet.getNickname() != null) {
             System.out.println("Glub, glub. Im - " + pet.getNickname());
         } else {
-            System.out.println("Pet you want to describe is missing this fields: Nickname");
+            System.out.println("Pet you want to describe is missing this fields: Nickname.");
         }
     }
 }

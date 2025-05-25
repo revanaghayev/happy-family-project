@@ -1,8 +1,7 @@
-package console;
+package com.example.happyfamily.console;
 
-import entities.*;
-import enums.DayOfWeek;
-import enums.Species;
+import com.example.happyfamily.entities.*;
+import com.example.happyfamily.enums.DayOfWeek;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -21,16 +20,14 @@ public class FamilyApp {
         Human father = new Man();
         Family ourFamily = new Family(mother, father);
         Human son = new Human("Maxim", "Mamedov", 2004, 90,
-                Map.of(DayOfWeek.MONDAY.name(), "Workout", DayOfWeek.TUESDAY.name(), "Running"),
-                ourFamily);
-        Human daughter1 = new Human("Natasha", "Mamedova", 2001);
-        Human daughter2 = new Human("Natasha", "Mamedova", 2001);
-        Human daughter3 = new Human("Natasha", "Mamedova", 2001);
+                Map.of(DayOfWeek.MONDAY.name(), "Workout", DayOfWeek.TUESDAY.name(), "Running"), ourFamily);
+        Human daughter1 = new Woman("Natasha", "Mamedova", 2001);
+        Human daughter2 = new Woman("Natasha", "Mamedova", 2001);
+        Human daughter3 = new Woman("Natasha", "Mamedova", 2001);
 
         Human p1 = new Human();
         Human p2 = new Human();
         Human p3 = null;
-
 
 
 //        Testing equals/hashCode contract
@@ -40,7 +37,7 @@ public class FamilyApp {
 //        System.out.println(daughter1.equals(daughter3));
 
 
-        //Checking finalize method (if currently GC works or not)
+//        Checking finalize method (if currently GC works or not)
 //        for (int i = 1; i < 10000; i++) {
 //            new Human();
 //            System.gc();
@@ -48,6 +45,7 @@ public class FamilyApp {
 
         son.toWelcomeTheFavourite(pet1);
         son.toFeedTheFavourite(true, pet2);
+        son.toDescribeTheFavourite(pet1);
         pet1.eat();
         pet3.foul();
         pet4.foul();
