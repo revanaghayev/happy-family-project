@@ -86,37 +86,6 @@ public class Human implements HumanCreator{
         }
     }
 
-    public String ifExists(List<String> namesList, int nameIndex) {
-        for (Human child: this.getFamily().getChildren()) {
-            if (namesList.get(nameIndex).equalsIgnoreCase(child.getName())){
-                return "Undefined name!";
-            }
-        }
-        return namesList.get(nameIndex);
-    }
-
-    public void bornChild(Family family) {
-        Random randomGenerator = new Random();
-        if (family.getFather() != null && family.getMother() != null && !(this instanceof Man) && this.getFamily() != null) {
-            List<String > boyNames = List.of("Alexei", "Ivan", "Sergey", "Nikolai", "Dmitriy",
-                    "Andrei", "Vladimir", "Yuri", "Pavel", "Mikhail");
-            List<String> girlNames = List.of("Anastasia", "Svetlana", "Ekaterina", "Irina", "Olga",
-                    "Tatiana", "Natalia", "Maria", "Alina", "Elena");
-            int randomNameIndex = randomGenerator.nextInt(10);
-
-            Human boy = new Man(ifExists(boyNames, randomNameIndex), family.getFather().getSurname(), LocalDateTime.now().getYear(),
-                    ((family.getFather().getIq() + family.getMother().getIq()) / 2),
-                    Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family);
-            Human girl = new Woman(ifExists(girlNames, randomNameIndex), family.getFather().getSurname(), LocalDateTime.now().getYear(),
-                    ((family.getFather().getIq() + family.getMother().getIq()) / 2),
-                    Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family);
-            Human newBorn = randomGenerator.nextBoolean() ? boy : girl;
-            family.addChild(newBorn);
-        } else {
-            System.out.println("Can't born child, because there's no father or mother!");
-        }
-    }
-
     public String getName() {
         return name;
     }
@@ -199,19 +168,19 @@ public class Human implements HumanCreator{
         if (name == null) {
             return "Empty Human";
         } else if (iq == 0) {
-            return "Human:" +
+            return "Human{" +
                     " Name = " + name +
                     ", Surname = " + surname +
                     ", Birth date = " + dateOfBirth +
-                    ';';
+                    '}';
         } else {
-            return "Human:" +
+            return "Human{" +
                     " Name = " + name +
                     ", Surname= " + surname +
                     ", Birth date = " + dateOfBirth +
                     ", IQ level = " + iq +
                     ", Schedule = " + schedule +
-                    ';';
+                    '}';
         }
     }
 }

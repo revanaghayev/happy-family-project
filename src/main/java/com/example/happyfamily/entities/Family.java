@@ -107,11 +107,11 @@ public class Family {
 
     @Override
     public String toString() {
-        return "Family:" +
+        return "Family{" +
                 " Mother = " + mother +
                 ", Father = " + father +
                 ", Children = " + children +
                 ", Pet = " + pets +
-                ';';
+                '}';
     }
 }

@@ -122,22 +122,22 @@ public abstract class Pet {
         if (species == null) {
             return "All fields are empty!";
         } else if (age == null) {
-            return species + ":" +
+            return species + "{" +
                     " Nickname = " + nickname +
-                    " Characteristics = {" + (species.canFly ? "Can fly," : "Can't fly,") +
-                    " Number of legs: " + species.numberOfLegs +
-                    (species.hasFur ? "Has fur}" : "Has not any fur}") +
-                    ';';
+                    ", Characteristics{" + (species.canFly ? "Can fly" : "Can't fly") +
+                    ", Number of legs = " + species.numberOfLegs +
+                    (species.hasFur ? ", Has fur}" : ", Has not any fur}") +
+                    '}';
         } else {
-            return species + ":" +
+            return species + "{" +
                     " Nickname = " + nickname +
                     ", Age = " + age +
                     ", TrickLevel = " + trickLevel +
                     ", Habits = " + habits +
-                    " Characteristics = {" + (species.canFly ? "Can fly," : "Can't fly,") +
-                    " Number of legs: " + species.numberOfLegs +
-                    (species.hasFur ? "Has fur}" : "Has not any fur}") +
-                    ';';
+                    " Characteristics{" + (species.canFly ? "Can fly" : "Can't fly") +
+                    ", Number of legs = " + species.numberOfLegs +
+                    (species.hasFur ? ", Has fur}" : ", Has not any fur}") +
+                    '}';
         }
     }
 }
