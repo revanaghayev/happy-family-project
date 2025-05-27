@@ -76,7 +76,7 @@ public class Family {
         this.children = children;
     }
 
-    public Set<Pet> getPet() {
+    public Set<Pet> getPets() {
         return this.pets;
     }
 

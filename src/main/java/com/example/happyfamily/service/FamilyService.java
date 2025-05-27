@@ -1,5 +1,6 @@
 package com.example.happyfamily.service;
 
+import com.example.happyfamily.dao.CollectionFamilyDAO;
 import com.example.happyfamily.dao.FamilyDAO;
 import com.example.happyfamily.entities.*;
 import com.example.happyfamily.enums.DayOfWeek;
@@ -8,7 +9,7 @@ import com.example.happyfamily.enums.Gender;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class FamilyService {
+public class FamilyService implements FamilyDAO{
 
     private FamilyDAO familyDao;
 
@@ -84,7 +85,7 @@ public class FamilyService {
         saveFamily(family);
     }
 
-    public void bornChild(Family family, String childName, Gender gender) {
+    public Family bornChild(Family family, String childName, Gender gender) {
         if (family == null) {
             throw new IllegalArgumentException("Family cannot be null.");
         }
@@ -105,6 +106,48 @@ public class FamilyService {
                         ((family.getFather().getIq() + family.getMother().getIq()) / 2),
                         Map.of(DayOfWeek.MONDAY.name(), "Crying everyday for MILK!"), family));
         family.addChild(child);
+        return family;
     }
 
+    public Family adoptChild(Family family, Human adoptedChild) {
+        if (family == null && adoptedChild == null)
+            throw new IllegalArgumentException("Family or child you given can't be null");
+        family.addChild(adoptedChild);
+        return family;
+    }
+
+    public boolean deleteAllChildrenOlderThan(int birthDate) {
+        if (birthDate < 1900 || birthDate > LocalDateTime.now().getYear())
+            throw new IllegalArgumentException("Year cannot be lower than 1900 or bigger than current year!");
+        List<Family> families = getAllFamilies();
+
+        for (Family family : families) {
+            for (int i = 0; i < family.getChildren().size(); i++) {
+                if (family.getChildren().get(i).getDateOfBirth() > birthDate) {
+                    family.deleteChild(family.getChildren().get(i));
+                }
+            }
+        }
+        return true;
+    }
+
+    public int count() {
+        return getAllFamilies().size();
+    }
+
+    public Family getFamilyById(int familyID) {
+        if (familyID < 0) throw new IllegalArgumentException("ID given must be at least 0!");
+        return getAllFamilies().get(familyID);
+    }
+
+    public Set<Pet> getPets(int familyIndex) {
+        if (familyIndex < 0) throw new IllegalArgumentException("Index given must be at least 0!");
+        return getAllFamilies().get(familyIndex).getPets();
+    }
+
+    public boolean addPet(int familyIndex, Pet pet) {
+        if (pet == null || familyIndex < 0) throw new NullPointerException("Pet can't be null!");
+        getAllFamilies().get(familyIndex).getPets().add(pet);
+        return true;
+    }
 }
